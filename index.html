@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 ¡Feliz Cumpleaños! 💌</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Estilos base */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #FFD6E5;  /* Color de fondo rosa pastel */
+            font-family: 'Comic Sans MS', cursive;
+            position: relative;
+        }
+
+        /* Decoración de fondo con más corazones */
+        .decoracion {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .estrella {
+            position: absolute;
+            animation: flotar 3s infinite;
+            font-size: 1.5em;
+            opacity: 0.3;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Pastel */
+        .cake-container {
+            position: relative;
+            cursor: pointer;
+            z-index: 2;
+            margin-top: 50px;
+        }
+
+        .bottom-tier {
+            width: 300px;
+            height: 150px;
+            background: #FF9EB5;  /* Color base del pastel */
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 10px 20px rgba(255, 158, 181, 0.3);
+        }
+
+        .top-tier {
+            position: absolute;
+            top: -30px;
+            left: 75px;
+            width: 150px;
+            height: 100px;
+            background: #FF6B9D;  /* Color superior del pastel */
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Vela ajustada */
+        .candle {
+            position: absolute;
+            top: -70px;  /* 1cm más cerca del pastel */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 50px;
+            background: linear-gradient(to bottom, #FFF, #FFD1DC 70%);
+            border-radius: 5px 5px 0 0;
+            z-index: 4;
+        }
+
+        .flame {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 30px;
+            background: linear-gradient(to bottom, #fff36a, #ffffff);
+            border-radius: 50% 50% 35% 35%;
+            opacity: 0;
+            animation: llama 0.1s infinite alternate;
+            filter: blur(1px);
+            z-index: 5;
+        }
+
+        @keyframes llama {
+            0% { transform: translateX(-50%) scale(0.95) rotate(-2deg); }
+            100% { transform: translateX(-50%) scale(1.05) rotate(2deg); }
+        }
+
+        /* Sobre interactivo */
+        .envelope {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 80px;
+            height: 60px;
+            background: #FF9EB5;
+            border-radius: 5px;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 3;
+        }
+
+        .envelope:hover {
+            transform: scale(1.1);
+        }
+
+        /* Carta con imagen de fondo */
+        .letter {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 85%;
+            max-width: 400px;
+            height: 85vh;
+            max-height: 600px;
+            background-image: url('carta-fondo.jpg'); /* Imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(58, 57, 57, 0);
+            transition: all 0.4s;
+            z-index: 4;
+            overflow-y: auto;
+        }
+
+        .letter.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Mensaje emergente */
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5em;
+            color: #FF6B9D;
+            opacity: 0;
+            pointer-events: none;
+            text-shadow: 2px 2px #FFF;
+            animation: fadeInOut 3s;
+            z-index: 6;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -30%); }
+            20% { opacity: 1; transform: translate(-50%, -50%); }
+            80% { opacity: 1; transform: translate(-50%, -50%); }
+            100% { opacity: 0; transform: translate(-50%, -70%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decoración de fondo con más corazones -->
+    <div class="decoracion">
+        <div class="estrella" style="top:10%; left:20%">💖</div>
+        <div class="estrella" style="top:30%; left:70%">💖</div>
+        <div class="estrella" style="top:70%; left:10%">💖</div>
+        <div class="estrella" style="top:20%; left:50%">💖</div>
+        <div class="estrella" style="top:50%; left:30%">💖</div>
+        <div class="estrella" style="top:80%; left:80%">💖</div>
+        <div class="estrella" style="top:80%; left:60%">💖</div>
+        <div class="estrella" style="top:80%; left:40%">💖</div>
+        <div class="estrella" style="top:80%; left:13%">💖</div>
+        <div class="estrella" style="top:80%; left:98%">💖</div>
+    </div>
+
+    <!-- Botón de control de música -->
+    <div id="boton-musica" 
+         style="position: fixed; top: 20px; left: 20px; z-index: 10; 
+                background: #FF6B9D; color: white; padding: 12px; 
+                border-radius: 50%; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.2);"
+         onclick="controlarMusica()">
+        🎵
+    </div>
+
+    <!-- Pastel -->
+    <div class="cake-container" onclick="celebrate()">
+        <div class="cake">
+            <div class="bottom-tier"></div>
+            <div class="top-tier"></div>
+            <div class="candle"></div>
+            <div class="flame"></div>
+        </div>
+    </div>
+
+    <!-- Sobre -->
+    <div class="envelope" onclick="showLetter()"></div>
+
+    <!-- Carta con imagen de fondo -->
+<div class="letter">
+    <!-- Texto "Feliz Cumpleaños" en la esquina superior izquierda -->
+    <div style="position: absolute; top: 7px; left: 25px; font-family: 'Dancing Script', cursive; font-size: 24px; color: #FF6B9D;">
+        para keiry❤️🥰
+    </div>
+
+    <!-- Contenido de la carta -->
+    <div style="text-align: center; background: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; margin-top: 80px;">
+        <h2 style="color: #FF6B9D; margin-top: 0;">¡Feliz Cumpleaños mi princesa! 🎂</h2>
+        
+        <div style="margin: 20px 0;">
+            <img src="foto1.jpg" style="width: 100%; max-width: 250px; border-radius: 10px;">
+        </div>
+
+        <div style="padding: 20px;">
+            <p style="color: #666; line-height: 1.6; margin: 0;">
+                feliz cumpleaños a la mujer más linda del mundo<br><br>
+                hoy celebramos el dia en que llegaste al mundo<br>
+                y no puedo evitar sentirme el hombre más afortunado
+                por tenerte a mi lado<br><br>
+                TQM<br>
+                
+            </p>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <img src="foto2.jpg" style="width: 100%; max-width: 250px; border-radius: 10px;">
+        </div>
+    </div>
+</div>
+
+<!-- Reproductor de audio -->
+<audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // Control de música
+    const musica = document.getElementById('musica');
+    const botonMusica = document.getElementById('boton-musica');
+
+    function controlarMusica() {
+        if (musica.paused) {
+            musica.play();
+            botonMusica.style.background = '#FF9EB5';
+        } else {
+            musica.pause();
+            botonMusica.style.background = '#FF6B9D';
+        }
+    }
+
+    document.addEventListener('click', function inicializarMusica() {
+        musica.play().catch(() => {});
+        document.removeEventListener('click', inicializarMusica);
+    });
+
+    // Función para las animaciones
+        function celebrate() {
+            const flame = document.querySelector('.flame');
+            const message = document.createElement('div');
+            
+            flame.style.opacity = '1';
+            
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#FF6B9D', '#FF9EB5', '#FFD1DC']
+            });
+
+            message.className = 'message';
+            message.textContent = '¡Feliz Cumpleaños! 🎉';
+            document.body.appendChild(message);
+            setTimeout(() => message.remove(), 3000);
+        }
+
+        // Función para mostrar/ocultar carta
+        function showLetter() {
+            document.querySelector('.letter').classList.toggle('show');
+        }
+
+        // Crear decoración dinámica
+        function crearEstrellas() {
+            const decoracion = document.querySelector('.decoracion');
+            const emojis = ['💖', '✨', '🎀', '🎉', '🎁'];
+            
+            for(let i = 0; i < 15; i++) {  /* Más corazones */
+                const estrella = document.createElement('div');
+                estrella.className = 'estrella';
+                estrella.style.left = Math.random() * 100 + '%';
+                estrella.style.top = Math.random() * 100 + '%';
+                estrella.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                decoracion.appendChild(estrella);
+            }
+        }
+        
+        crearEstrellas();
+    </script>
+</body>
+</html>
